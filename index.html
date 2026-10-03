@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#9fcb7e">
+<title>햇님 마을 게임</title>
+<meta name="description" content="햇님 마을 사다리 게임과 주사위 여행. 인터넷 없이도 즐길 수 있는 가족용 비영리 게임입니다.">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="햇님 마을">
+<style>
+:root{--bg:#fbf7e8;--ink:#3b3a30;--sub:#6f6c5a;--card:#fff;--line:#e6dfc3;--green:#6aa84f;--green2:#9fcb7e}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{word-break:keep-all;overflow-wrap:anywhere;margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 -apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;padding:max(20px,env(safe-area-inset-top)) 16px max(28px,env(safe-area-inset-bottom))}
+main{max-width:640px;margin:0 auto}
+h1{font-size:26px;margin:12px 0 4px;text-align:center}
+.lead{text-align:center;color:var(--sub);margin:0 0 22px}
+.game{display:flex;gap:14px;align-items:center;background:var(--card);border:2px solid var(--line);border-radius:18px;padding:14px;margin:0 0 14px}
+.game img{width:72px;height:72px;flex:none;border-radius:16px}
+.game h2{font-size:19px;margin:0 0 2px}
+.game p{margin:0 0 8px;color:var(--sub);font-size:14px;line-height:1.5}
+.btns{display:flex;gap:8px;flex-wrap:wrap}
+a.btn{display:inline-block;padding:9px 16px;border-radius:999px;text-decoration:none;font-size:15px;font-weight:700}
+a.play{background:var(--green);color:#fff}
+a.save{background:#f1ecd2;color:var(--ink)}
+section{background:var(--card);border:2px solid var(--line);border-radius:18px;padding:14px 16px;margin:0 0 14px}
+h3{font-size:16px;margin:0 0 6px}
+section p,section li{font-size:14px;color:var(--sub);margin:4px 0}
+section ul{padding-left:18px;margin:4px 0}
+a{color:#3f7d2a}
+code{font:12px/1.4 ui-monospace,Menlo,Consolas,monospace;word-break:break-all;background:#f6f2de;padding:2px 5px;border-radius:6px;display:block;margin:2px 0 8px}
+.small{font-size:13px;text-align:center;color:var(--sub);margin-top:18px}
+@media (max-width:380px){.game{flex-direction:column;text-align:center}.btns{justify-content:center}}
+</style>
+</head>
+<body>
+<main>
+  <h1>햇님 마을 게임</h1>
+  <p class="lead">가족이 함께 즐기는 작은 게임 두 가지예요.<br>인터넷이 없어도 한 번 열어 두면 계속 할 수 있어요.</p>
+
+  <div class="game">
+    <img src="thumb-dice.png" alt="" width="72" height="72">
+    <div>
+      <h2>햇님 마을 주사위 여행</h2>
+      <p>주사위를 굴려 마을을 돌며 즐기는 보드게임</p>
+      <div class="btns">
+        <a class="btn play" href="dice.html">바로 하기</a>
+        <a class="btn save" href="dice.html" download="햇님마을-주사위여행.html">파일로 받기</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="game">
+    <img src="thumb-ladder.png" alt="" width="72" height="72">
+    <div>
+      <h2>햇님 마을 사다리 게임</h2>
+      <p>사다리를 타며 마을 친구들과 달리는 게임</p>
+      <div class="btns">
+        <a class="btn play" href="ladder.html">바로 하기</a>
+        <a class="btn save" href="ladder.html" download="햇님마을-사다리게임.html">파일로 받기</a>
+      </div>
+    </div>
+  </div>
+
+  <section>
+    <h3>휴대폰 홈 화면에 두고 쓰기</h3>
+    <ul>
+      <li>안드로이드(크롬): 메뉴 → '홈 화면에 추가' 또는 '앱 설치'</li>
+      <li>아이폰(사파리): 공유 버튼 → '홈 화면에 추가'</li>
+    </ul>
+    <p>이 첫 화면에서 추가하면 두 게임이 모두 들어 있어서, 나중에는 인터넷 없이도 열려요.</p>
+  </section>
+
+  <section>
+    <h3>만든 사람과 이용 조건</h3>
+    <ul>
+      <li>기획·감수: 햇살이 아빠</li>
+      <li>코드·글: Claude (Anthropic) · 그림: ChatGPT (OpenAI)</li>
+      <li>© 2026 햇살이 아빠 · <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.ko">CC BY-NC-ND 4.0</a></li>
+    </ul>
+    <p>돈을 받지 않고, 고치지 않고, 만든 사람을 밝히기만 하면 누구나 기간 제한 없이 나눠 쓸 수 있어요. 광고를 붙이거나 내용을 바꿔서 퍼뜨리는 것은 허락하지 않아요. 이 이용 허락은 햇살이 아빠가 가진 권리의 범위에서 적용돼요.</p>
+  </section>
+
+  <section>
+    <h3>원본 확인하기</h3>
+    <p>공식 배포처는 아래 두 곳뿐이에요. 다른 곳에서 받은 파일은 바뀌었을 수 있으니, 받은 파일의 SHA-256 값이 아래와 같은지 확인해 주세요.</p>
+    <ul>
+      <li><a href="https://blog.naver.com/graydrama">블로그 '10월의 햇살'</a></li>
+      <li>이 페이지 (haetsal-dad.github.io/haetnim-village)</li>
+    </ul>
+    <p>주사위 여행 (dice.html)</p>
+    <code>c79da65177e3679bc63618493e8df865b90c670a238b695e379e1884ce2d264f</code>
+    <p>사다리 게임 (ladder.html)</p>
+    <code>c8b11c87c889a431c30e400a804ce59ee4b5ea53b6a63761f69267b5815275d8</code>
+  </section>
+
+  <p class="small">글꼴: 주아(Jua), 고운돋움(Gowun Dodum) — SIL Open Font License 1.1</p>
+</main>
+<script>
+if('serviceWorker' in navigator){
+  addEventListener('load',function(){ navigator.serviceWorker.register('sw.js').catch(function(){}); });
+}
+</script>
+</body>
+</html>
