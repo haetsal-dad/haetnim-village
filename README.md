@@ -27,7 +27,7 @@
 - 이 조건을 지키면 누구나 기간 제한 없이 그대로 복사하고 나눌 수 있습니다.
 - 이 이용 허락은 햇살이 아빠가 가진 권리의 범위에서 적용됩니다. 그림과 코드는 AI가 만든 부분이라 보호 범위가 법적으로 확정되지 않았습니다.
 
-게임에 들어 있는 글꼴(주아, 고운돋움)은 위 조건이 아니라 [SIL Open Font License 1.1](https://openfontlicense.org/)을 따릅니다. 전문은 각 게임 파일 첫머리에 적혀 있습니다.
+게임과 첫 화면에 들어 있는 글꼴(주아, 고운돋움, 첫 화면 제목의 개구)은 위 조건이 아니라 [SIL Open Font License 1.1](https://openfontlicense.org/)을 따릅니다. 전문은 각 HTML 파일 첫머리에 적혀 있습니다.
 
 ## 원본 확인
 
@@ -40,8 +40,11 @@
 
 | 파일 | 설명 |
 | --- | --- |
-| `index.html` | 첫 화면 (게임 고르기, 이용 조건, 원본 확인) |
+| `index.html` | 첫 화면 '햇님 마을 놀이터' (게임 고르기, 보호자 안내: 이용 조건·원본 확인). 그림까지 파일 하나에 들어 있음 |
 | `dice.html`, `ladder.html` | 게임 본체 (파일 하나로 완결) |
-| `manifest.webmanifest`, `sw.js`, `icon-*.png`, `thumb-*.png`, `apple-touch-icon.png` | 휴대폰 홈 화면 추가와 오프라인 실행용 |
+
+**인터넷 없이 쓰기:** `index.html`, `dice.html`, `ladder.html` 세 파일만 한 폴더에 받아 두고 `index.html`을 열면 됩니다. 그림과 글꼴은 모두 각 파일 안에 들어 있습니다. 파일 이름은 바꾸지 마세요.
+
+| `manifest.webmanifest`, `sw.js`, `icon-*.png`, `apple-touch-icon.png` | 휴대폰 홈 화면 추가와 오프라인 실행용 |
 | `SHA256SUMS.txt` | 원본 파일 확인용 값 |
 | `LICENSE` | 이용 조건 요약 |
