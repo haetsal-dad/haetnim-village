@@ -1,5 +1,5 @@
 {
-  "name": "햇님 마을 게임",
+  "name": "햇님 마을 놀이터",
   "short_name": "햇님 마을",
   "description": "햇님 마을 사다리 게임과 주사위 여행",
   "lang": "ko",
@@ -10,8 +10,23 @@
   "background_color": "#fbf7e8",
   "theme_color": "#9fcb7e",
   "icons": [
-    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
-    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
-    { "src": "icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
   ]
 }
