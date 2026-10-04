@@ -42,9 +42,8 @@
 | --- | --- |
 | `index.html` | 첫 화면 '햇님 마을 놀이터' (게임 고르기, 보호자 안내: 이용 조건·원본 확인). 그림까지 파일 하나에 들어 있음 |
 | `dice.html`, `ladder.html` | 게임 본체 (파일 하나로 완결) |
-
-**인터넷 없이 쓰기:** `index.html`, `dice.html`, `ladder.html` 세 파일만 한 폴더에 받아 두고 `index.html`을 열면 됩니다. 그림과 글꼴은 모두 각 파일 안에 들어 있습니다. 파일 이름은 바꾸지 마세요.
-
 | `manifest.webmanifest`, `sw.js`, `icon-*.png`, `apple-touch-icon.png` | 휴대폰 홈 화면 추가와 오프라인 실행용 |
 | `SHA256SUMS.txt` | 원본 파일 확인용 값 |
 | `LICENSE` | 이용 조건 요약 |
+
+**인터넷 없이 쓰기:** `index.html`, `dice.html`, `ladder.html` 세 파일만 한 폴더에 받아 두고 `index.html`을 열면 됩니다. 그림과 글꼴은 모두 각 파일 안에 들어 있습니다. 파일 이름은 바꾸지 마세요.
