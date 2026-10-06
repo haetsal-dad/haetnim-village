@@ -4260,6 +4260,7 @@ const PIX = (() => {
     get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
     set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} },
   };
+  UI.sd = store.get('ttm-sd') !== '0'; // 말 모양: 기본은 전신(란드 결정, 2026-10-06). 고르면 기억한다(사다리 게임도 같음)
   UI.speed = SPEED[store.get('ttm-speed')] ? store.get('ttm-speed') : 'normal';
   UI.sound = SOUND[store.get('ttm-sound')] ? store.get('ttm-sound') : 'mid';
   SFX.setVol(SOUND[UI.sound][1]);
@@ -5587,7 +5588,7 @@ const PIX = (() => {
       document.querySelectorAll('#segSound [data-v]').forEach(x => x.classList.toggle('on', x === b)); muteLabel();
     }));
     document.querySelectorAll('#segSd [data-v]').forEach(b => b.addEventListener('click', () => {
-      UI.sd = b.dataset.v === '1'; const box = $('#tokens'); if (box) box.innerHTML = ''; if (UI.g) renderTokens(UI.g); (UI.spec || []).forEach(s => { s.el.innerHTML = specFace(s.key); });
+      UI.sd = b.dataset.v === '1'; store.set('ttm-sd', b.dataset.v); const box = $('#tokens'); if (box) box.innerHTML = ''; if (UI.g) renderTokens(UI.g); (UI.spec || []).forEach(s => { s.el.innerHTML = specFace(s.key); });
       document.querySelectorAll('#segSd [data-v]').forEach(x => x.classList.toggle('on', x === b));
     }));
     document.querySelectorAll('#segSpeed [data-s]').forEach(b => b.addEventListener('click', () => {

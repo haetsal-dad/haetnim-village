@@ -2328,7 +2328,8 @@ const PIPS={1:[4],2:[0,8],3:[0,4,8],4:[0,2,6,8],5:[0,2,4,6,8],6:[0,2,3,5,6,8]};
 const $=id=>document.getElementById(id);
 const stage=$('stage'), hud=$('hud'), prompt=$('prompt'), bubbles=$('bubbles'), diceEl=$('dice'), dicebox=$('dicebox'), dicelbl=$('dicelbl'), cardEl=$('card'), dock=$('dock'), hint=$('hint'), ov=$('overlay'), ov2=$('overlay2');
 const TURBO=/turbo/.test(location.hash);
-const UI={sd:false, pick:'dog', fast:false, fit:false, skip:false, manualUntil:0, game:null, map:null, svg:null, vb:null,
+const UI={sd:store.get('pgr-sd')!=='0',   // 말 모양: 기본은 전신(란드 결정, 2026-10-06). 고르면 기억한다
+  pick:'dog', fast:false, fit:false, skip:false, manualUntil:0, game:null, map:null, svg:null, vb:null,
   cam:{x:0,y:0,w:1}, tgt:{x:0,y:0,w:1}, zoom:'wide', follow:null, tok:[], bub:{}, said:{}, stats:[], forceRotate:/rotate/.test(location.hash)};
 UI.spd=SPEED[store.get('pgr-speed')]?store.get('pgr-speed'):'normal';
 UI.sound=SOUND[store.get('pgr-sound')]?store.get('pgr-sound'):'mid';
@@ -2507,7 +2508,7 @@ function showMenu(){
   bind('segMusic',v=>{ UI.music=v; store.set('pgr-music',v); BGM.setVol(MUSIC[v][1]); if(MUSIC[v][1]<=0||!UI.game||UI.game.over) BGM.stop(); else if(!BGM.current()) startMusic(); });
   bind('segSound',v=>{ UI.sound=v; store.set('pgr-sound',v); SFX.setVol(SOUND[v][1]); SFX.unlock(); SFX.play('good'); });
   bind('segSpeed',v=>{ UI.spd=v; store.set('pgr-speed',v); spdLabel(); });
-  bind('segSd',v=>{ UI.sd=v==='1'; retoken(); });
+  bind('segSd',v=>{ UI.sd=v==='1'; store.set('pgr-sd',v); retoken(); });
   bind('segSkin',v=>{ if(UI.skin===v) return; UI.skin=v; store.set('pgr-skin',v); redrawBoard(); });
   $('mHelp').onclick=()=>showHelp(showMenu);
   if(inGame) $('mQuit').onclick=showRestart;   // ↺ 단추와 같은 '처음으로 갈까요?' 창(햇님 마을로·옆 게임 포함)
