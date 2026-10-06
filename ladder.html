@@ -190,7 +190,6 @@ button:focus-visible{outline:3px solid var(--acorn);outline-offset:2px}
 body.dk #prompt{top:calc(44% - 70px);transform:translate(-50%,calc(-100% + 6px))}body.dk #prompt.on{transform:translate(-50%,-100%)}
 /* 여러 줄(숫자+차례, 친구들 대답): 한 줄에 하나씩 */
 #prompt.multi{white-space:normal;border-radius:22px;padding:10px 22px;font-size:23px;line-height:1.45;text-align:left}#prompt.multi .ln{display:block;white-space:nowrap;animation:lnIn .3s both}@keyframes lnIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-#prompt .yn{font:inherit;font-size:.9em;color:var(--ink);border:2px solid var(--ink);border-radius:999px;padding:1px 16px;margin-left:8px;background:#fff;box-shadow:2px 2px 0 var(--shade);cursor:pointer;vertical-align:1px}#prompt .yn.y{background:#9fd27f}#prompt .yn:active{transform:translate(1px,1px);box-shadow:1px 1px 0 var(--shade)}#prompt .ln.me{animation:lnIn .3s both,meGlow 1.2s .4s ease-in-out infinite alternate}@keyframes meGlow{to{opacity:.75}}
 /* 가운데 주사위 */
 #dice{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%) scale(.9);display:flex;flex-direction:column;align-items:center;gap:8px;z-index:40;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s}
 #dice.on{opacity:1;transform:translate(-50%,-50%) scale(1)}
@@ -1561,9 +1560,9 @@ class WolfRace extends Race {
       }
     }catch(e){ if(e!==ABORT) throw e; }
   }
-  // 술래잡기 시작: 늑대 "준비됐어~?" → 친구들이 노란 띠에서 한꺼번에 대답. 나(사람)는 응/아니를 직접 고른다
+  // 술래잡기 시작: 늑대 "준비됐어~?" → 친구들이 노란 띠에서 한꺼번에 대답하고 저절로 넘어간다(나도 내 친구 말투로 대답. 누를 단추 없음)
   async readyCall(){
-    const rows=this.order.filter(i=>!this.P[i].wolf).map(i=>this.P[i]).map(p=>{ const a=READY[p.a]||['응!']; return {p,line:p.human?null:a[Math.floor(Math.random()*a.length)]}; });
+    const rows=this.order.filter(i=>!this.P[i].wolf).map(i=>this.P[i]).map(p=>{ const a=READY[p.a]||['응!']; return {p,line:a[Math.floor(Math.random()*a.length)]}; });
     await this.h.ready(this.W,rows);
     await this.sleep(300);
   }
@@ -2586,7 +2585,7 @@ function logPush(x){ UI.log.push(x); if(UI.log.length>160) UI.log.splice(0,UI.lo
 function renderLog(){
   const el=$('log'), g=UI.game, L=UI.log.slice(-40), n=L.length;
   const rows=L.map((x,k)=>{ const old=n-k>3?' old':'';
-    if(x.round) return `<div class="lt${old}">${x.round}라운드</div>`;
+    if(x.round) return `<div class="lt${old}">${x.round}바퀴째</div>`;   // 모두 한 번씩 굴리면 한 바퀴(주사위 여행의 'N일째'와 같은 자리)
     const p=g&&g.P[x.i]; if(!p) return '';
     return `<div class="lg${old}"><span class="cf" style="--s:${SEAT[x.i]}">${p.face}</span><div>${esc(x.line)}</div></div>`;
   }).join('');
@@ -3818,33 +3817,14 @@ const hooks={
     await card(q,{face:FI(was==='hide'?'bush':'spark'),name:'반짝! 안 잡혔어요',desc:was==='hide'?'숨는 덤불에 쏙 숨어서 늑대가 못 찾았어요':'땡 보호 덕분에 이번엔 안 잡혔어요',fam:'hold'});
   },
   async wolfCount(w,t,r){ UI.follow=w.i; showPrompt(`${w.face} ${t}`,1500,'count'); sfx('step',r); },
-  // 시작 인사: 늑대 "준비됐어~?" → 친구들 대답(나는 응/아니 단추). 아니면 "그럼 준비 다 되면 말해 줘~" 하고 다시 묻는다
+  // 시작 인사: 늑대 "준비됐어~?" → 셋이 한꺼번에 대답 → 잠깐 보여 주고 저절로 시작(란드: 응을 누르게 하면 괜히 귀찮다)
   async ready(w,rows){
-    const g=UI.game, ln=(r,body,k,cls)=>`<span class="ln${cls?' '+cls:''}" style="animation-delay:${k*0.25}s">${r.p.face} ${body}</span>`;
-    const yn='<button type="button" class="yn y" data-a="1">응!</button><button type="button" class="yn n" data-a="0">아니</button>';
+    const g=UI.game, ln=(r,body,k)=>`<span class="ln" style="animation-delay:${k*0.25}s">${r.p.face} ${body}</span>`;
     showPrompt(`${w.face} 준비됐어~?`,1400,'count'); sfx('step',0);
     await g.sleep(1400);
-    const me=rows.find(r=>r.p.human);
-    const answers=k0=>rows.map((r,k)=>r.p.human?ln(r,yn,k+k0,'me'):ln(r,r.line,k+k0)).join('');
-    const hold=(html,cls)=>{ showPrompt(html,1e9,cls); };
-    let html=answers(0);
-    rows.forEach((r,k)=>{ if(!r.p.human&&UI.spd!=='turbo') setTimeout(()=>sfx('animal',r.p.a),k*250); });
-    if(!me||TURBO){ showPrompt(rows.map((r,k)=>ln(r,r.p.human?'응!':r.line,k)).join(''),1800,'multi'); await g.sleep(1900); return; }
-    for(;;){
-      hold(html,'multi ask');
-      let yes;
-      try{ yes=await new Promise((res,rej)=>{ pending=rej; prompt.onclick=e=>{ const b=e.target.closest('.yn'); if(!b) return; e.stopPropagation(); if(pending===rej) pending=null; prompt.onclick=null; res(b.dataset.a==='1'); }; }); }
-      catch(e){ prompt.onclick=null; clearTimeout(promptT); prompt.classList.remove('on','ask'); throw e; }
-      sfx('tap');
-      const others=rows.filter(r=>!r.p.human);
-      if(yes){
-        hold(rows.map(r=>ln(r,r.p.human?'응!':r.line,0)).join(''),'multi');
-        await g.sleep(1100); prompt.classList.remove('on'); return;
-      }
-      hold(rows.map(r=>ln(r,r.p.human?'아니~ 잠깐만!':r.line,0)).join(''),'multi');
-      await g.sleep(1100);
-      html=ln({p:w},'그럼 준비 다 되면 말해 줘~',0)+ln(me,yn,1,'me');
-    }
+    rows.forEach((r,k)=>{ if(UI.spd!=='turbo') setTimeout(()=>sfx('animal',r.p.a),k*250); });
+    showPrompt(rows.map((r,k)=>ln(r,r.line,k)).join(''),2000,'multi');
+    await g.sleep(2100);
   },
   chooseDir(p,f){
     showDice(dieHTML(FI('dice')),true); dicelbl.hidden=true;
@@ -3918,7 +3898,7 @@ function showResult(w,ranks){
   const g=UI.game, H=g.P.find(x=>x.human), MED=[FI('medal'),FI('medal','m2'),FI('medal','m3'),'4등'];
   const hr=ranks.indexOf(H);
   const title= w.human?'1등! 내가 제일 먼저 도착했어요!':`${w.name} 1등!`;
-  const why=`${PLACES[UI.type]?PLACES[UI.type].name+' · ':''}${Math.max(1,Math.ceil(UI.turns/4))}라운드 만에 도착 · 나는 ${hr+1}등`;
+  const why=`${PLACES[UI.type]?PLACES[UI.type].name+' · ':''}${Math.max(1,Math.ceil(UI.turns/4))}바퀴 만에 도착 · 나는 ${hr+1}등`;
   const rows=ranks.map((p,k)=>{
     const s=UI.stats[p.i];
     return `<div class="prow${k===0?' w':''}"><span class="pl">${MED[k]}</span><span class="cf" style="--s:${SEAT[p.i]}">${p.face}</span>
